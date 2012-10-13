@@ -1,0 +1,10 @@
+Sep 17, 2012 7:03:01 PM INFO	:	Bid-7 Bid was created - time 30 seconds
+Sep 17, 2012 7:03:01 PM INFO	:	Bid-7 Bid was created - time 30 seconds
+Sep 17, 2012 7:04:01 PM INFO	:	Bid-7 Bid was created - time 15 seconds
+Sep 17, 2012 7:07:16 PM INFO	:	Bid-7 Bid was created - time 15 seconds
+Sep 17, 2012 7:29:07 PM INFO	:	Bid-7 Bid was created - time 15 seconds
+Sep 17, 2012 7:32:35 PM INFO	:	Bid-7 Bid was created - time 30 seconds
+Sep 17, 2012 7:41:20 PM INFO	:	Bid-7 Bid was created - time 30 seconds
+Sep 17, 2012 7:51:22 PM INFO	:	Bid-7 Bid was created - time 30 seconds
+Sep 17, 2012 7:54:53 PM INFO	:	Bid-7 Bid was created - time 30 seconds
+Sep 17, 2012 7:58:38 PM INFO	:	Bid-7 Bid was created - time 30 seconds

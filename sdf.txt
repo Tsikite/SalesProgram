@@ -1,0 +1,3 @@
+Oct 2, 2012 11:00:01 AM INFO	:	1004 sdfUser created
+Oct 2, 2012 4:09:53 PM INFO	:	1682 sdfItem created
+Oct 2, 2012 4:12:30 PM INFO	:	7391 sdfItem created

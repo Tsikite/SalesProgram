@@ -1,0 +1,12 @@
+Sep 17, 2012 7:03:01 PM INFO	:	Bid-5 Bid was created - time 30 seconds
+Sep 17, 2012 7:04:01 PM INFO	:	Bid-5 Bid was created - time 15 seconds
+Sep 17, 2012 7:04:01 PM INFO	:	Bid-5 Bid was created - time 15 seconds
+Sep 17, 2012 7:06:45 PM INFO	:	Bid-5 Bid was created - time 15 seconds
+Sep 17, 2012 7:28:37 PM INFO	:	Bid-5 Bid was created - time 15 seconds
+Sep 17, 2012 7:31:35 PM INFO	:	Bid-5 Bid was created - time 30 seconds
+Sep 17, 2012 7:35:19 PM INFO	:	Bid-5 Bid was created - time 30 seconds
+Sep 17, 2012 7:40:20 PM INFO	:	Bid-5 Bid was created - time 30 seconds
+Sep 17, 2012 7:50:22 PM INFO	:	Bid-5 Bid was created - time 30 seconds
+Sep 17, 2012 7:52:12 PM INFO	:	Bid-5 Bid was created - time 30 seconds
+Sep 17, 2012 7:53:53 PM INFO	:	Bid-5 Bid was created - time 30 seconds
+Sep 17, 2012 7:57:38 PM INFO	:	Bid-5 Bid was created - time 30 seconds

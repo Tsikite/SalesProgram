@@ -1,0 +1,2 @@
+Oct 2, 2012 11:00:29 AM INFO	:	1004 sdcUser created
+Oct 2, 2012 7:33:23 PM INFO	:	1004 sdcUser created

@@ -1,0 +1,6 @@
+Sep 17, 2012 7:03:01 PM INFO	:	Bid-9 Bid was created - time 30 seconds
+Sep 17, 2012 7:04:16 PM INFO	:	Bid-9 Bid was created - time 15 seconds
+Sep 17, 2012 7:07:46 PM INFO	:	Bid-9 Bid was created - time 15 seconds
+Sep 17, 2012 7:29:37 PM INFO	:	Bid-9 Bid was created - time 15 seconds
+Sep 17, 2012 7:33:35 PM INFO	:	Bid-9 Bid was created - time 30 seconds
+Sep 17, 2012 7:59:38 PM INFO	:	Bid-9 Bid was created - time 30 seconds

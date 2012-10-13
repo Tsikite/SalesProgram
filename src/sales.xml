@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+       xmlns:context="http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+       xmlns:flow="http://www.springframework.org/schema/webflow-config/spring-webflow-config-1.0.xsd"
+       xmlns:jms="http://www.springframework.org/schema/jms/spring-jms-2.5.xsd"
+       xmlns:jee="http://www.springframework.org/schema/jee/spring-jee-2.5.xsd"
+       xmlns:lang="http://www.springframework.org/schema/lang/spring-lang-2.5.xsd"
+       xmlns:osgi="http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+       xmlns:tx="http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+       xmlns:util="http://www.springframework.org/schema/util/spring-util-2.5.xsd"
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+          http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/aop/spring-aop-2.5.xsd/spring-spring-aop-2.5.xsd-2.5.xsd
+          http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/context/spring-context-2.5.xsd/spring-spring-context-2.5.xsd-2.5.xsd
+          http://www.springframework.org/schema/webflow-config/spring-webflow-config-1.0.xsd http://www.springframework.org/schema/webflow-config/spring-webflow-config-1.0.xsd/spring-spring-webflow-config-1.0.xsd-2.5.xsd
+          http://www.springframework.org/schema/jms/spring-jms-2.5.xsd http://www.springframework.org/schema/jms/spring-jms-2.5.xsd/spring-spring-jms-2.5.xsd-2.5.xsd
+          http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/jee/spring-jee-2.5.xsd/spring-spring-jee-2.5.xsd-2.5.xsd
+          http://www.springframework.org/schema/lang/spring-lang-2.5.xsd http://www.springframework.org/schema/lang/spring-lang-2.5.xsd/spring-spring-lang-2.5.xsd-2.5.xsd
+          http://www.springframework.org/schema/osgi/spring-osgi.xsd http://www.springframework.org/schema/osgi/spring-osgi.xsd/spring-spring-osgi.xsd-2.5.xsd
+          http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/tx/spring-tx-2.5.xsd/spring-spring-tx-2.5.xsd-2.5.xsd
+          http://www.springframework.org/schema/util/spring-util-2.5.xsd http://www.springframework.org/schema/util/spring-util-2.5.xsd/spring-spring-util-2.5.xsd-2.5.xsd
+">
+
+    <bean id="sale01" class="application.common.entities.BidRoom">
+		<property name="itemId" value="0001"/>
+	</bean>
+    <bean id="sale02" class="application.common.entities.BidRoom">
+		<property name="itemId" value="0002"/>
+	</bean>
+    <bean id="sale03" class="application.common.entities.BidRoom">
+		<property name="itemId" value="0003"/>
+	</bean>
+    <bean id="sale04" class="application.common.entities.BidRoom">
+		<property name="itemId" value="0004"/>
+	</bean>
+    <bean id="sale05" class="application.common.entities.BidRoom">
+		<property name="itemId" value="0005"/>
+	</bean>
+    <bean id="sale06" class="application.common.entities.AuctionRoom">
+		<property name="itemId" value="0001"/>
+	</bean>
+    <bean id="sale07" class="application.common.entities.AuctionRoom">
+		<property name="itemId" value="0002"/>
+	</bean>
+    <bean id="sale08" class="application.common.entities.AuctionRoom">
+		<property name="itemId" value="0003"/>
+	</bean>
+    <bean id="sale09" class="application.common.entities.AuctionRoom">
+		<property name="itemId" value="0004"/>
+	</bean>
+    <bean id="sale10" class="application.common.entities.AuctionRoom">
+		<property name="itemId" value="0005"/>
+	</bean>
+</beans>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<items>
+	<item id="1" name="LCD-TV" auctionInitPrice="120" bidInitPrice="240"/>
+	<item id="2" name="Laptop Computer" auctionInitPrice="60" bidInitPrice="120"/>
+	<item id="3" name="VCR" auctionInitPrice="80" bidInitPrice="150"/>
+	<item id="4" name="Headphones" auctionInitPrice="70" bidInitPrice="500"/>
+	<item id="5" name="Speakers" auctionInitPrice="150" bidInitPrice="350"/>
+</items>
