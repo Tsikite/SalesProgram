@@ -29,18 +29,17 @@ public class Program {
         // Creating sales
 
          //Part one
-//         SalesManager.start(true);
-//            
-//         DataManager.allUsers.get(0).start();
-//         DataManager.allUsers.get(1).start();
-//         DataManager.allUsers.get(2).start();
-//         DataManager.allUsers.get(3).start();
+         SalesManager.start(true);
+         
+         for (int i = 0; i < DataManager.allUsers.size(); i++) {
+            DataManager.allUsers.get(i).start();
+         }
          
 
         //Part two
-        SalesManager.start(false);
-
-        MainFrame mainFrame = new MainFrame();
+//        SalesManager.start(false);
+//
+//        MainFrame mainFrame = new MainFrame();
         
         
         

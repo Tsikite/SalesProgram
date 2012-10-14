@@ -42,13 +42,13 @@ public class BidRoom extends SaleRoom {
         logger_tag = "Bid-" + BidSerial++;
         logger = LoggerManager.getInstance().getBidRoomLogger(logger_tag);
         logger.info(logger_tag + " Bid was created - time "
-                + DataManager.configuration.getSaleTime() + " seconds");
+                + getLifeTime() + " seconds");
 
         // Setting a timer. When time is over - the TimeTask will set the sale
         // as inactive.
         timer = new Timer();
         timer.schedule(new SaleKiller(this),
-                DataManager.configuration.getSaleTime() * 1000);
+                getLifeTime() * 1000);
 
         // Setting a dummy offer with the starting price.
         //initOffers();

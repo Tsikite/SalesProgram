@@ -37,7 +37,7 @@ public class AuctionRoom extends SaleRoom {
         logger_tag = "Auction - " + AuctionSerial++;
         logger = LoggerManager.getInstance().getAuctionRoomLogger(logger_tag);
         logger.info(logger_tag + " Auction was created - time "
-                + DataManager.configuration.getSaleTime() + " seconds");
+                + getLifeTime() + " seconds");
 
         timer = new Timer();
         // When the auction enters the time extend mode, every offer sets the
@@ -45,15 +45,14 @@ public class AuctionRoom extends SaleRoom {
         // time configured in the configuration as auction time extend
         // The auction will enter extend mode when the timer is lower than the
         // auction time extend
-        if (DataManager.configuration.getSaleTime() <= DataManager.configuration
+        if (getLifeTime() <= DataManager.configuration
                 .getAuctionTimeExtend()) {
             timer.schedule(new SaleKiller(this),
                     DataManager.configuration.getAuctionTimeExtend() * 1000);
-        } else // Setting a timer. When time is over - the TimeTask will set the
-        // sale as inactive.
-        {
+        } else {    // Setting a timer. When time is over - the TimeTask will set the
+                    // sale as inactive.
             timer.schedule(new SaleExtend(this),
-                    DataManager.configuration.getSaleTime() * 1000
+                    getLifeTime() * 1000
                     - DataManager.configuration.getAuctionTimeExtend()
                     * 1000);
         }

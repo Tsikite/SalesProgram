@@ -21,6 +21,7 @@ import application.common.exceptions.UsersReadException;
 import application.dal.DataBaseReader;
 import application.dal.IDataReader;
 import application.dal.XmlReader;
+import application.dal.XmlWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,11 +43,14 @@ public class DataManager implements IDataManager {
     public static List<String> salesNames = new LinkedList<>();
     public static Configurations configuration = Configurations.getInstance();
 
+    public static XmlWriter writer;
+    
     public static void Init() throws DataManagerInitExcption {
 
         switch (resourceType) {
 
             case XML:
+                writer = new XmlWriter();
                 reader = new XmlReader();
                 break;
 

@@ -1,4 +1,0 @@
-Sep 17, 2012 7:04:31 PM INFO	:	Auction - 6 Auction was created - time 15 seconds
-Sep 17, 2012 7:08:16 PM INFO	:	Auction - 6 Auction was created - time 15 seconds
-Sep 17, 2012 7:34:35 PM INFO	:	Auction - 6 Auction was created - time 30 seconds
-Sep 17, 2012 8:00:38 PM INFO	:	Auction - 6 Auction was created - time 30 seconds

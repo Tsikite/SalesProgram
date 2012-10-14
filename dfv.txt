@@ -1,3 +1,0 @@
-Oct 2, 2012 3:27:49 PM INFO	:	9882 dfvItem created
-Oct 2, 2012 4:13:25 PM INFO	:	3811 dfvItem created
-Oct 2, 2012 7:13:02 PM INFO	:	9254 dfvItem created

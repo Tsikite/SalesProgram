@@ -27,32 +27,42 @@
 
     <bean id="sale01" class="application.common.entities.BidRoom">
 		<property name="itemId" value="0001"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale02" class="application.common.entities.BidRoom">
 		<property name="itemId" value="0002"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale03" class="application.common.entities.BidRoom">
 		<property name="itemId" value="0003"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale04" class="application.common.entities.BidRoom">
 		<property name="itemId" value="0004"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale05" class="application.common.entities.BidRoom">
 		<property name="itemId" value="0005"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale06" class="application.common.entities.AuctionRoom">
 		<property name="itemId" value="0001"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale07" class="application.common.entities.AuctionRoom">
 		<property name="itemId" value="0002"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale08" class="application.common.entities.AuctionRoom">
 		<property name="itemId" value="0003"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale09" class="application.common.entities.AuctionRoom">
 		<property name="itemId" value="0004"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
     <bean id="sale10" class="application.common.entities.AuctionRoom">
 		<property name="itemId" value="0005"/>
+		<property name="lifeTime" value="20"/>
 	</bean>
 </beans>

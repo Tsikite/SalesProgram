@@ -27,6 +27,16 @@ public abstract class SaleRoom extends Thread {
     private boolean isActive = false;
     protected Timer timer;
     protected CountDownLatch latch;
+    protected int lifeTime;
+
+    public void setLifeTime(int lifeTime) {
+        this.lifeTime = lifeTime;
+    }
+
+    public int getLifeTime() {
+        return lifeTime;
+    }
+    
     public Stack<Offer> getOffersStack() {
         return allOffers;
     }
@@ -120,18 +130,6 @@ public abstract class SaleRoom extends Thread {
         latch = new CountDownLatch(1);
         try {
             latch.await();
- //        while (isActive) {
- //
- //            // ********* Simulating some commands **********
- //            try {
- //            
- //               //latch = new CountDownLatch(1);
- //            } catch (InterruptedException e) {
- //                // TODO Auto-generated catch block
- //                e.printStackTrace();
- //            }
- //        }
- //        }
         } catch (InterruptedException ex) {
             Logger.getLogger(SaleRoom.class.getName()).log(Level.SEVERE, null, ex);
         }

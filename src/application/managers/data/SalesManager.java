@@ -4,6 +4,7 @@ import application.common.entities.Item;
 import application.common.entities.SaleRoom;
 import application.common.entities.factory.SaleFactory;
 import application.common.exceptions.SaleTypeException;
+import application.common.timerTasks.EndOfDay;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -11,6 +12,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.w3c.dom.Document;
+import java.util.Timer;
 
 public class SalesManager {
 
@@ -69,15 +73,14 @@ public class SalesManager {
     public static void start(boolean startThread) {
 
         ExecutorService salesLimiter = Executors.newFixedThreadPool(DataManager.configuration.getMaxAuctionAtATime());
-
-        ApplicationContext context = new ClassPathXmlApplicationContext("sales.xml");
+        
+        ApplicationContext context = new FileSystemXmlApplicationContext("DataBase/sales.xml");
         SaleRoom saleRoom;
 
         for (String saleName : DataManager.salesNames) {
             saleRoom = (SaleRoom) context.getBean(saleName);
             activeSalesList.add(saleRoom);
             allSalesTree.put(saleRoom.getItemId(), saleRoom);
-
             //printSalesList();
             if(startThread) {
                 if (saleRoom.getType() == TYPE_AUCTION) {
@@ -91,6 +94,9 @@ public class SalesManager {
             }
         }
         salesLimiter.shutdown();
+        
+        Timer endOfDay = new Timer();
+        endOfDay.schedule(new EndOfDay(), 10000);
     }
 
     public static synchronized void moveSaleToFinishedList(SaleRoom theSale) {
@@ -115,5 +121,10 @@ public class SalesManager {
         }
         
         return false;
+    }
+    
+    public static void endSale(SaleRoom sale) {
+        sale.deactivateRoom();
+        DataManager.writer.appendSale(sale);
     }
 }

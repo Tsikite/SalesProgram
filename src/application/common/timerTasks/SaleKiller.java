@@ -22,5 +22,4 @@ public class SaleKiller extends TimerTask {
 	public SaleKiller(SaleRoom theSale) {
 		this.theSale = theSale;
 	}
-
 }

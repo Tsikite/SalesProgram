@@ -89,6 +89,7 @@ public class XmlReader implements IDataReader {
 		return nList;
 	}
 	
+        @Override
 	public NodeList getSales() {
             NodeList nList = salesDoc.getElementsByTagName("bean");
             return nList;
