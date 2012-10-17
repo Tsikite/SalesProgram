@@ -89,8 +89,12 @@ public abstract class SaleRoom extends Thread {
     
     public void deactivateRoom() {
         //System.out.println("Room Deactivated");
+
         isActive = false;
         SalesManager.moveSaleToFinishedList(this);
+        timer.cancel();
+        freeLatch();
+
     }
     
     public void activateRoom() {
@@ -129,7 +133,9 @@ public abstract class SaleRoom extends Thread {
         //System.out.println("Sale is active");
         latch = new CountDownLatch(1);
         try {
-            latch.await();
+            if(SalesManager.isSalesDayOn()) {
+                latch.await();
+            }
         } catch (InterruptedException ex) {
             Logger.getLogger(SaleRoom.class.getName()).log(Level.SEVERE, null, ex);
         }

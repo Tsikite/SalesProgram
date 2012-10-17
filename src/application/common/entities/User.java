@@ -63,12 +63,8 @@ public class User extends Thread {
         int numOfBids = (int) (Math.random() * (MAX_NUM_OF_BIDS - MIN_NUM_OF_BIDS) + MIN_NUM_OF_BIDS);
         SaleRoom sale;
         int saleIndex;
-        for (int i = 0; i < numOfBids; i++) {
-
+        for (int i = 0; (i < numOfBids) && SalesManager.isSalesDayOn(); i++) {
             
-
-            //SalesManager.printSalesList();
-
             // Choosing random sale for the current user
             if (SalesManager.isAllSalesFinished()) {
                 i = MAX_NUM_OF_BIDS + 1; // ends the user bidding

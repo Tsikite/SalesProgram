@@ -18,12 +18,19 @@ public class EndOfDay extends TimerTask {
 
     @Override
     public void run() {
-        List<SaleRoom> sales = SalesManager.getAllSalesList();
-        for (int i = 0; i < sales.size(); i++) {
-            SalesManager.endSale(sales.get(i));
-        }
+        // Closing sales day
+        SalesManager.closeSalesDay();
         
+        // Waiting for all users to finish the current offers
+        
+        
+        // Closing all sales
+        List<SaleRoom> sales = SalesManager.getAllSalesList();
+        
+        // Deactivating all the sales and saving it to xml
+        while (sales.size()>0) {
+                SalesManager.endSale(sales.get(sales.size()-1));
+        }
         DataManager.writer.saveDataToDestination();
     }
-    
 }

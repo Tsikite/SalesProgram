@@ -20,9 +20,11 @@ public class SalesManager {
 
     public static final int TYPE_AUCTION = 0;
     public static final int TYPE_BID = 1;
-    public static TreeMap<Integer, SaleRoom> allSalesTree = new TreeMap<>();
+    private static TreeMap<Integer, SaleRoom> allSalesTree = new TreeMap<>();
     private static List<SaleRoom> activeSalesList = new LinkedList<>();
     private static List<SaleRoom> finishedSalesList = new LinkedList<>();
+    private static boolean salesAreOn = true;
+    private static ExecutorService salesLimiter;
 
     public static void createNewSaleRoom(int saleType, Item item) throws SaleTypeException {
         if (saleType != TYPE_AUCTION && saleType != TYPE_BID) {
@@ -30,10 +32,27 @@ public class SalesManager {
         } else {
             SaleRoom theSale = saleType == TYPE_BID ? SaleFactory.getNewBid(item) : SaleFactory.getNewAuction(item);
             theSale.setItemId(item.getId());
-            //allSalesTree.put(theSale.getSaleId(), theSale);
+            allSalesTree.put(theSale.getSaleId(), theSale);
             activeSalesList.add(theSale);
             theSale.activateRoom();
         }
+    }
+    
+    public static void closeSalesDay() {
+        salesAreOn = false;
+    }
+    
+    public void shutDownWaitingAuctions() {
+        List<Runnable> waitingAuctions = salesLimiter.shutdownNow();
+        
+        for (int i = 0; i < waitingAuctions.size(); i++) {
+            DataManager.writer.appendSale(((SaleRoom)waitingAuctions.get(i)));
+            
+        }
+    }
+    
+    public static boolean isSalesDayOn() {
+        return salesAreOn;
     }
 
     public static SaleRoom getSale(int saleId) {
@@ -45,7 +64,7 @@ public class SalesManager {
         List<SaleRoom> activeSales = new LinkedList<>();
 
         for (SaleRoom sale : getAllSalesList()) {
-            if (/*sale.isAlive() && */sale.isActive()) {
+            if (sale.isActive()) {
                 activeSales.add(sale);
             }
         }
@@ -72,7 +91,7 @@ public class SalesManager {
 
     public static void start(boolean startThread) {
 
-        ExecutorService salesLimiter = Executors.newFixedThreadPool(DataManager.configuration.getMaxAuctionAtATime());
+        salesLimiter = Executors.newFixedThreadPool(DataManager.configuration.getMaxAuctionAtATime());
         
         ApplicationContext context = new FileSystemXmlApplicationContext("DataBase/sales.xml");
         SaleRoom saleRoom;
@@ -81,7 +100,7 @@ public class SalesManager {
             saleRoom = (SaleRoom) context.getBean(saleName);
             activeSalesList.add(saleRoom);
             allSalesTree.put(saleRoom.getItemId(), saleRoom);
-            //printSalesList();
+            
             if(startThread) {
                 if (saleRoom.getType() == TYPE_AUCTION) {
                     salesLimiter.execute(saleRoom);
@@ -93,12 +112,15 @@ public class SalesManager {
                 saleRoom.activateRoom();
             }
         }
-        salesLimiter.shutdown();
         
         Timer endOfDay = new Timer();
         endOfDay.schedule(new EndOfDay(), 10000);
     }
 
+    private static void shutDownExecutor() {
+        salesLimiter.shutdownNow();
+    }
+    
     public static synchronized void moveSaleToFinishedList(SaleRoom theSale) {
 
         activeSalesList.remove(theSale);
@@ -124,6 +146,7 @@ public class SalesManager {
     }
     
     public static void endSale(SaleRoom sale) {
+        System.out.println("-----------***  endSale()-" + sale.getName() + "  ***-------------");
         sale.deactivateRoom();
         DataManager.writer.appendSale(sale);
     }
