@@ -1,23 +1,15 @@
 package application.common.entities;
 
-import java.util.Timer;
-import java.util.logging.Logger;
-
-import application.Program;
 import application.common.entities.factory.UserFactory;
 import application.common.timerTasks.SaleKiller;
-import application.managers.data.DataManager;
 import application.managers.data.SalesManager;
 import application.managers.log.LoggerManager;
 import application.managers.ui.UserInterfaceManager;
-import java.util.Stack;
+import java.util.Timer;
 
 public class BidRoom extends SaleRoom {
 
     private static int BidSerial = 0;
-    private String logger_tag = "";
-    // **************************
-    private Logger logger;
 
     // **************************
     public BidRoom(int itemId) {
@@ -37,6 +29,22 @@ public class BidRoom extends SaleRoom {
 
     }
 
+    @Override
+    public void run() {
+        init(); // It's here because the timer should start counting as the thread starts
+        UserInterfaceManager.getInstance().bidRoomSaleActive(logger_tag, getItem().getName());
+        super.run();
+        if (this.getAllOffers().size() > 1) {
+//			System.out.println("The winner is "
+//					+ getWinner().theUser.getUserName() + " "
+//					+ getWinner().getPrice() + " item: " + item.getName());
+            UserInterfaceManager.getInstance().bidRoomDeclareWinner(
+                    logger_tag, getWinner().theUser.getUserName(),
+                    getWinner().getPrice(), getItem().getName());
+        }
+        UserInterfaceManager.getInstance().bidRoomSaleDeactive(logger_tag, getItem().getName());
+    }
+
     public void init() {
 
         logger_tag = "Bid-" + BidSerial++;
@@ -54,32 +62,18 @@ public class BidRoom extends SaleRoom {
         //initOffers();
     }
 
+    @Override
     public void initOffers() {
         getAllOffers().add(new Offer(UserFactory.getUser("Dummy", null), getItem().getBidInitPrice()));
         setWinner(getAllOffers().peek());
     }
 
     @Override
-    public void run() {
-        init(); // It's here because the timer should start counting as the thread starts
-        UserInterfaceManager.getInstance().bidRoomSaleActive(logger_tag, getItem().getName());
-        super.run();
-        if (this.getAllOffers().size() > 1) {
-//			System.out.println("The winner is "
-//					+ getWinner().theUser.getUserName() + " "
-//					+ getWinner().getPrice() + " item: " + item.getName());
-            UserInterfaceManager.getInstance().bidRoomDeclareWinner(
-                    logger_tag, getWinner().theUser.getUserName(),
-                    getWinner().getPrice(), getItem().getName());
-        }
-        UserInterfaceManager.getInstance().bidRoomSaleDeactive(logger_tag, getItem().getName());
-    }
-
     public synchronized boolean makeAnOffer(User theUser, int price) {
         if (isActive()) {
 
             UserInterfaceManager.getInstance().bidRoomGotAnOffer(logger_tag, theUser.getName(), price, getItem().getName());
-            
+
             // Adding the Offer to the offers container
             getAllOffers().add(new Offer(theUser, price));
 

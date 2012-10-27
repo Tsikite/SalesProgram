@@ -47,6 +47,10 @@ public class DataManager implements IDataManager {
     
     public static void Init() throws DataManagerInitExcption {
 
+     
+        
+        
+        
         switch (resourceType) {
 
             case XML:
@@ -66,10 +70,14 @@ public class DataManager implements IDataManager {
         }
 
         try {
+//             IDataReader  reader2 = new DataBaseReader();
+//            reader2.Init();
+//            reader2.getUsers();
+            
             reader.Init();
             configNodeList = reader.getConfiguration();
             itemsNodeList = reader.getItems();
-            usersNodeList = reader.getUsers();
+            usersNodeList =  reader.getUsers();
             salesNodeList = reader.getSales();
 
             for (int i = 0; i < itemsNodeList.getLength(); i++) {
@@ -95,7 +103,7 @@ public class DataManager implements IDataManager {
                 configuration.setAuctionTimeExtend(Integer.parseInt(((Element) nNode).getAttribute("auctionTimeExtend")));
                 configuration.setMaxAuctionAtATime(Integer.parseInt(((Element) nNode).getAttribute("maxAuctionAtATime")));
                 configuration.setSaleTime(Integer.parseInt(((Element) nNode).getAttribute("saleTime")));
-
+                configuration.setDataBaseUrl(((Element) nNode).getAttribute("dataBaseUrl"));
             }
 
         } catch (SalesReadException e) {

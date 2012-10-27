@@ -15,7 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class SaleRoom extends Thread {
-    
+
+    protected String logger_tag = "";
+    protected Logger logger;
+    //-----------------------------
     protected int type;
     private static int idGenerator = 1000;
     private int id;
@@ -29,6 +32,34 @@ public abstract class SaleRoom extends Thread {
     protected CountDownLatch latch;
     protected int lifeTime;
 
+    public SaleRoom(int itemId) {
+        this.setItemId(itemId);
+        id = idGenerator++;
+    }
+
+    public SaleRoom(Item item) {
+        this.setItemId(item.getId());
+    }
+
+    public SaleRoom() {
+    }
+
+    @Override
+    public void run() {
+        this.setName(showType() + itemId);
+        activateRoom();
+
+        //System.out.println("Sale is active");
+        latch = new CountDownLatch(1);
+        try {
+            if (SalesManager.isSalesDayOn()) {
+                latch.await();
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SaleRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void setLifeTime(int lifeTime) {
         this.lifeTime = lifeTime;
     }
@@ -36,57 +67,44 @@ public abstract class SaleRoom extends Thread {
     public int getLifeTime() {
         return lifeTime;
     }
-    
+
     public Stack<Offer> getOffersStack() {
         return allOffers;
     }
-    
+
     public int getItemId() {
         return itemId;
     }
-    
+
     public void setItemId(int itemId) {
         this.itemId = itemId;
     }
-    
+
     public int getType() {
         return type;
     }
-    
+
     public int getSaleId() {
         return id;
     }
-    
+
     public void stopTimer() {
         timer.cancel();
         //	System.out.println("Timer stopped");
     }
-    
-    public SaleRoom(int itemId) {
-        this.setItemId(itemId);
-        id = idGenerator++;
-    }
-    
-    public SaleRoom(Item item) {
-        this.setItemId(item.getId());
-    }
-    
-    public SaleRoom() {
-        
-    }
-    
+
     public List<User> getUsersOnTheSale() {
         List<User> users = new LinkedList<User>();
-        
-        for(int i=1; i<allOffers.size(); i++) {
-            if(!users.contains(allOffers.get(i).getTheUser())) {
+
+        for (int i = 1; i < allOffers.size(); i++) {
+            if (!users.contains(allOffers.get(i).getTheUser())) {
                 users.add(allOffers.get(i).getTheUser());
             }
         }
-        
+
         return users;
     }
-    
+
     public void deactivateRoom() {
         //System.out.println("Room Deactivated");
 
@@ -96,79 +114,63 @@ public abstract class SaleRoom extends Thread {
         freeLatch();
 
     }
-    
+
     public void activateRoom() {
         initOffers();
         isActive = true;
     }
-    
+
     abstract public boolean makeAnOffer(User theUser, int price);
+
     abstract public void initOffers();
-    
+
     @Override
     public String toString() {
         return "For item " + DataManager.getItemById(itemId).toString() + ", the winner is " + getWinner().toString();
     }
-    
+
     public void reSchedualTimer(int timeLength) {
         timer.cancel();
         timer = new Timer();
         timer.schedule(new SaleKiller(this), timeLength);
     }
-    
+
     public String showType() {
-        if(type == SalesManager.TYPE_BID) {
+        if (type == SalesManager.TYPE_BID) {
             return "Bid";
-        }
-        else {
+        } else {
             return "Auction";
         }
     }
-    
-    @Override
-    public void run() {
-        this.setName(showType() + itemId);
-        activateRoom();
 
-        //System.out.println("Sale is active");
-        latch = new CountDownLatch(1);
-        try {
-            if(SalesManager.isSalesDayOn()) {
-                latch.await();
-            }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SaleRoom.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void freeLatch(){
+    public void freeLatch() {
         latch.countDown();
     }
-    
+
     public Offer getWinningOffer() {
         return getWinner();
     }
-    
+
     public Item getItem() {
         return DataManager.getItemById(itemId);
     }
-    
+
     protected synchronized void setWinner(Offer winner) {
         this.winner = winner;
     }
-    
+
     protected synchronized Offer getWinner() {
         return winner;
     }
-    
+
     protected synchronized void setAllOffers(Stack<Offer> allOffers) {
         this.allOffers = allOffers;
     }
-    
+
     protected synchronized Stack<Offer> getAllOffers() {
         return allOffers;
     }
-    
+
     public boolean isActive() {
         return isActive;
     }

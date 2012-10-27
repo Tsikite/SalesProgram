@@ -7,14 +7,12 @@ import application.common.exceptions.SaleTypeException;
 import application.common.timerTasks.EndOfDay;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import org.w3c.dom.Document;
-import java.util.Timer;
 
 public class SalesManager {
 
@@ -37,20 +35,20 @@ public class SalesManager {
             theSale.activateRoom();
         }
     }
-    
+
     public static void closeSalesDay() {
         salesAreOn = false;
     }
-    
+
     public void shutDownWaitingAuctions() {
         List<Runnable> waitingAuctions = salesLimiter.shutdownNow();
-        
+
         for (int i = 0; i < waitingAuctions.size(); i++) {
-            DataManager.writer.appendSale(((SaleRoom)waitingAuctions.get(i)));
-            
+            DataManager.writer.appendSale(((SaleRoom) waitingAuctions.get(i)));
+
         }
     }
-    
+
     public static boolean isSalesDayOn() {
         return salesAreOn;
     }
@@ -92,7 +90,7 @@ public class SalesManager {
     public static void start(boolean startThread) {
 
         salesLimiter = Executors.newFixedThreadPool(DataManager.configuration.getMaxAuctionAtATime());
-        
+
         ApplicationContext context = new FileSystemXmlApplicationContext("DataBase/sales.xml");
         SaleRoom saleRoom;
 
@@ -100,19 +98,18 @@ public class SalesManager {
             saleRoom = (SaleRoom) context.getBean(saleName);
             activeSalesList.add(saleRoom);
             allSalesTree.put(saleRoom.getItemId(), saleRoom);
-            
-            if(startThread) {
+
+            if (startThread) {
                 if (saleRoom.getType() == TYPE_AUCTION) {
                     salesLimiter.execute(saleRoom);
                 } else {
                     saleRoom.start();
                 }
-            }
-            else {
+            } else {
                 saleRoom.activateRoom();
             }
         }
-        
+
         Timer endOfDay = new Timer();
         endOfDay.schedule(new EndOfDay(), 10000);
     }
@@ -120,14 +117,14 @@ public class SalesManager {
     private static void shutDownExecutor() {
         salesLimiter.shutdownNow();
     }
-    
+
     public static synchronized void moveSaleToFinishedList(SaleRoom theSale) {
 
         activeSalesList.remove(theSale);
         System.err.println("The sale " + theSale.getName() + " has been moved to finished sales. (" + activeSalesList.size() + ")");
         finishedSalesList.add(theSale);
     }
-    
+
     public static void printSalesList() {
         System.out.println("***********************************");
         for (int i = 0; i < activeSalesList.size(); i++) {
@@ -135,16 +132,16 @@ public class SalesManager {
         }
         System.out.println("***********************************");
     }
-    
+
     public static boolean isAllSalesFinished() {
-        
-        if(activeSalesList.isEmpty()) {
+
+        if (activeSalesList.isEmpty()) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     public static void endSale(SaleRoom sale) {
         System.out.println("-----------***  endSale()-" + sale.getName() + "  ***-------------");
         sale.deactivateRoom();

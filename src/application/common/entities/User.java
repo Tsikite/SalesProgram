@@ -15,8 +15,8 @@ public class User extends Thread {
     private String whileWaiting;
     // **************************
     private Logger logger;
-
     // **************************
+
     public User(String userName, String whileWaiting) {
 
         setUserName(userName);
@@ -25,32 +25,6 @@ public class User extends Thread {
         id = idGenerator++;
         logger.info(id + " " + userName + "User created");
 
-    }
-
-    public int getUserId() {
-        return id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String name) {
-        this.userName = name;
-    }
-
-    public String getWhileWaiting() {
-        return whileWaiting;
-    }
-
-    public void setWhileWaiting(String whileWaiting) {
-        this.whileWaiting = whileWaiting;
-    }
-
-    @Override
-    public String toString() {
-        return "\nName: name " + userName + " While waiting action: "
-                + whileWaiting;
     }
 
     @Override
@@ -64,7 +38,7 @@ public class User extends Thread {
         SaleRoom sale;
         int saleIndex;
         for (int i = 0; (i < numOfBids) && SalesManager.isSalesDayOn(); i++) {
-            
+
             // Choosing random sale for the current user
             if (SalesManager.isAllSalesFinished()) {
                 i = MAX_NUM_OF_BIDS + 1; // ends the user bidding
@@ -102,17 +76,42 @@ public class User extends Thread {
                     System.out.println("Sorry, there are no more available sales at the moment (" + e.getMessage() + ")");
                 }
             }
-            
-            delay(10000,5000);
+
+            delay(10000, 5000);
         }
     }
 
     public void delay(int max, int min) {
         try {
-            sleep((int) (Math.random() * (max-min) + min));
+            sleep((int) (Math.random() * (max - min) + min));
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public int getUserId() {
+        return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String name) {
+        this.userName = name;
+    }
+
+    public String getWhileWaiting() {
+        return whileWaiting;
+    }
+
+    public void setWhileWaiting(String whileWaiting) {
+        this.whileWaiting = whileWaiting;
+    }
+
+    @Override
+    public String toString() {
+        return "\nName: name " + userName + " While waiting action: "
+                + whileWaiting;
     }
 }

@@ -9,7 +9,7 @@ public class Configurations {
 	private int maxAuctionAtATime;
 	private int auctionTimeExtend;
 	private int saleTime;
-
+        private String dataBaseUrl;
 	protected Configurations() {
 		// No instantiation is allowed.
 	}
@@ -46,14 +46,22 @@ public class Configurations {
 	public void setSaleTime(int saleTime) {
 		this.saleTime = saleTime;
 	}
+        
+	public String getDataBaseUrl() {
+		return dataBaseUrl;
+	}
 
+	public void setDataBaseUrl(String dataBaseUrl) {
+		this.dataBaseUrl = dataBaseUrl;
+	}
 
 
 	@Override
 	public String toString() {
 		return "\nMax Auctions at a time: " + maxAuctionAtATime
 				+ "\nAuction time extend: " + auctionTimeExtend
-				+ "\nBid sale time: " + saleTime;
+				+ "\nBid sale time: " + saleTime 
+                                + "\nData base url: " + dataBaseUrl;
 	}
 
 }

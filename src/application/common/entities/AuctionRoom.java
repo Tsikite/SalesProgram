@@ -1,6 +1,5 @@
 package application.common.entities;
 
-import application.common.entities.factory.UserFactory;
 import application.common.timerTasks.SaleExtend;
 import application.common.timerTasks.SaleKiller;
 import application.managers.data.DataManager;
@@ -8,14 +7,10 @@ import application.managers.data.SalesManager;
 import application.managers.log.LoggerManager;
 import application.managers.ui.UserInterfaceManager;
 import java.util.Timer;
-import java.util.logging.Logger;
 
 public class AuctionRoom extends SaleRoom {
 
     private static int AuctionSerial = 0;
-    private String logger_tag = "";
-    // **************************
-    private Logger logger;
     // **************************
     private boolean timeExtendMode = false;
 
@@ -23,7 +18,7 @@ public class AuctionRoom extends SaleRoom {
         super(itemId);
         type = SalesManager.TYPE_AUCTION;
     }
-    
+
     public AuctionRoom(Item item) {
         super(item);
         type = SalesManager.TYPE_AUCTION;
@@ -50,20 +45,14 @@ public class AuctionRoom extends SaleRoom {
             timer.schedule(new SaleKiller(this),
                     DataManager.configuration.getAuctionTimeExtend() * 1000);
         } else {    // Setting a timer. When time is over - the TimeTask will set the
-                    // sale as inactive.
+            // sale as inactive.
             timer.schedule(new SaleExtend(this),
                     getLifeTime() * 1000
                     - DataManager.configuration.getAuctionTimeExtend()
                     * 1000);
         }
-        
+
         //initOffers();
-    }
-    
-    public void initOffers() {
-        getAllOffers().add(
-                new Offer(new User("Dummy", null), getItem().getAuctionInitPrice()));
-        setWinner(getAllOffers().peek());
     }
 
     @Override
@@ -88,22 +77,29 @@ public class AuctionRoom extends SaleRoom {
             UserInterfaceManager.getInstance().auctionRoomDeclareWinner(
                     logger_tag, getWinner().theUser.getUserName(),
                     getWinner().getPrice(), getItem().getName());
-        }
-        else if (this.getAllOffers().size() == 1) {
+        } else if (this.getAllOffers().size() == 1) {
             UserInterfaceManager.getInstance().auctionRoomDeclareNoWinner(logger_tag, getItem().getName());
         }
         UserInterfaceManager.getInstance().auctionRoomSaleDeactive(logger_tag, getItem().getName());
+    }
+
+    @Override
+    public void initOffers() {
+        getAllOffers().add(
+                new Offer(new User("Dummy", null), getItem().getAuctionInitPrice()));
+        setWinner(getAllOffers().peek());
     }
 
     public void turnOnTimeExtend() {
         timeExtendMode = true;
     }
 
+    @Override
     public synchronized boolean makeAnOffer(User theUser, int price) {
         if (isActive()) {
-            
+
             UserInterfaceManager.getInstance().auctionRoomGotAnOffer(logger_tag, theUser.getName(), price, getItem().getName());
-            
+
             if (timeExtendMode) {
                 reSchedualTimer(DataManager.configuration
                         .getAuctionTimeExtend() * 1000);
@@ -130,4 +126,3 @@ public class AuctionRoom extends SaleRoom {
         return getWinner().getPrice();
     }
 }
-
